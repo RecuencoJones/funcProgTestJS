@@ -28,6 +28,17 @@ Array.prototype.group = function(){
     });
 }
 
+Array.prototype.power = function(){
+    var list = this;
+    var powered = [];
+
+    list.forEach(function(x){
+        powered.push(Math.pow(x[0],x[1]));
+    });
+
+    return powered;
+}
+
 function magic(a){
 											  // example with l1
     var tmp = a                               // [1,8,2,15,6,7,8,12]
@@ -35,14 +46,11 @@ function magic(a){
     .filter(function(x) { return x>5 })       // [8,6,8,12]
     .sort(function(a,b) {return b-a})         // [12,8,8,6]
     .group()                                  // [[12,1],[8,2],[6,1]]
-    .splice(1);                               // [[8,2],[6,1]]
+    .splice(1)                                // [[8,2],[6,1]]
+    .power()
+    .reduce(function(x,y) { return x*y });
 
-    tmp.forEach(function(x) { 
-        tmp[tmp.indexOf(x)]=Math.pow(x[0],x[1]); 
-    });                                       // [64,6]
-
-    var dummy = tmp.reduce(function(x,y) { return x*y });    // 384
-    return dummy;
+    return tmp;
 }
 
 console.log(l1,"-->",magic(l1));
